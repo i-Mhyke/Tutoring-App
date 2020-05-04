@@ -131,7 +131,7 @@ exports.protectRoutes = async (req, res, next) =>{
         //   });
         console.log(decoded);
         const currentUser = await User.findById(decoded.id);
-        if(!currentUser){
+        if(!currentUser || !currentUser.active){
             return next(
                     res.status(401).json({
                     status: 'Fail',
