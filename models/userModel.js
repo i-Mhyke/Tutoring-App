@@ -20,8 +20,12 @@ const userSchema = new mongoose.Schema({
     },
     role:{
         type: String,
-        enum: ['user', 'tutor', 'admin'],
+        enum: ['user', 'tutor'],
         default: 'user'
+    },
+    isAdmin:{
+        type: Boolean,
+        default: false,
     },
     password: {
         type: String,
@@ -38,8 +42,12 @@ const userSchema = new mongoose.Schema({
             },
             message: 'Password is not the same'
         }
+    },
+    active:{
+        type: Boolean,
+        default: true,
+        select: false
     }
-
 });
 userSchema.pre('save', async function(next) {
     if (!this.isModified('password')) return next();
@@ -48,6 +56,10 @@ userSchema.pre('save', async function(next) {
     this.confirmPassword = undefined;
     next();
 });
+userSchema.pre(/^find/, function(next){
+    this.find({ active: {$ne : false}})
+    next();
+})
 userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
     return await bcrypt.compare(candidatePassword, userPassword)
 };

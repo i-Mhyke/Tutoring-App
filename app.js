@@ -1,13 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
 dotenv.config({ path: './config.env'});
 const app = express();
 
 //database connection
-mongoose.connect(process.env.DATABASE_URI, {
+mongoose.connect(process.env.LOCAL_DATABASE, {
     useNewUrlParser: true,
     useCreateIndex:true,
     useFindAndModify: false,
@@ -18,15 +18,17 @@ mongoose.connect(process.env.DATABASE_URI, {
     console.log(`Database connection error: ${err.message}`)
 });
 
-//routes
-const userRouter = require('./routes/userRoute');
-
 //middlewares
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/v1', userRouter);
+//routes
+const userRouter = require('./routes/userRoute');
+const subjectRouter = require('./routes/subjectRoute');
+
+app.use('/api/v1', userRouter, subjectRouter);
 
 app.get('/', (req, res) =>{
     res.render('Hello world')

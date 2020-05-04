@@ -1,12 +1,15 @@
 const jwt = require('jsonwebtoken');
-const { promisify } = require('util');
+const {promisify} = require('util');
+const ObjectId = require('mongoose').Types.ObjectId;
 const User = require('./../models/userModel');
 
-const signToken = id => {
-    return jwt.sign({id}, process.env.JWT_SECRET, {
+
+
+const signToken = (id, role) => {
+    return jwt.sign({id, role}, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRESIN
 })
-}
+};
 exports.signUp = async (req, res, next) => {
     try{
         const userExists = await User.findOne({email: req.body.email});
@@ -25,8 +28,7 @@ exports.signUp = async (req, res, next) => {
         password: req.body.password,
         confirmPassword: req.body.confirmPassword
     });
-    const token = signToken(user._id)
-    res.header('Authorization', `Bearer ${token}`);
+    const token = signToken(user._id, user.role)
     res.status(201).json({
         status: 'success',
         token,
@@ -51,18 +53,16 @@ exports.signUp = async (req, res, next) => {
     });
 }
 next();
-}
+};
 
 exports.login = async (req, res, next) =>{
-    
         const {email, password} = req.body;
-
         if(!email || !password){
-            return res.status(400).json({
+            return next (res.status(400).json({
                 status: 'fail',
                 error: 'Please Provide Email and Password'
             })
-             next()
+            );
         }
         const user = await User.findOne({ email }).select('+password');
         if(!user || !(await user.correctPassword(password, user.password))){
@@ -73,9 +73,9 @@ exports.login = async (req, res, next) =>{
             next();
         }
 
-        const token = signToken(user._id);
+        const token = signToken(user._id, user.role);
         res.cookie('jwt', token, {expires: new Date(Date.now() + 9999)});
-        res.header('Authorization', `Bearer ${token}`);
+        // res.header('Authorization', `Bearer ${token}`);
         res.status(200).json({
             token,
             user: {
@@ -86,33 +86,54 @@ exports.login = async (req, res, next) =>{
             }  
         });
         next();
-}
+};
 exports.logout = (req, res) =>{
     res.clearCookie('jwt');
     res.status(200).json({
         message: 'Log out successful'
     });
-}
-
+};
 exports.protectRoutes = async (req, res, next) =>{
-    try{
+    try{ 
         let token;
-        if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
-           return token = req.headers.authorization.split(' ')[1];
+        if(req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer'){
+            token = req.headers.authorization.split(' ')[1]
         }
-        if(!token){
+         else if(!token){
             return next(
                 res.status(401).json({
                     status: 'Fail',
                     Error: 'You are not logged in. Please login to gain access'
                 })
             )
-        } 
-        const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+        }; 
+        console.log(token);
+
+        const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET, function (err){
+                if (err) {
+               return next( res.status(401).json({
+                    status: 'Fail',
+                    Error: 'You are not authenticated!'
+                })
+               )}
+        });
+        // jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
+        //     if (err) {
+        //        return next( res.status(401).json({
+        //             status: 'Fail',
+        //             Error: 'You are not authenticated!'
+        //         })
+        //        )
+        //     } else {
+        //       req.decoded = decoded;
+        //       next();
+        //     }
+        //   });
+        console.log(decoded);
         const currentUser = await User.findById(decoded.id);
         if(!currentUser){
             return next(
-                res.status(401).json({
+                    res.status(401).json({
                     status: 'Fail',
                     Error: 'User with token does not exist'
                 })
@@ -120,13 +141,13 @@ exports.protectRoutes = async (req, res, next) =>{
         }
         req.user = currentUser;
     }catch(err){
-        console.log(error)
+        console.log(err)
     }
     next();
-}
-
-exports.restrictAccess = (...roles) =>{
+};
+exports.restrictTo = (...roles) =>{
     return (req, res, next) =>{
+       // console.log(req);
         if(!roles.includes(req.user.role)){
             return next(
                 res.status(403).json({
@@ -137,4 +158,28 @@ exports.restrictAccess = (...roles) =>{
         }
         next();
     }
-}
+};
+exports.restrictToAdmin = (req, res, next) =>{
+    //console.log(req);
+    if(!req.user.isAdmin){
+        return next(
+            res.status(403).json({
+                status: 'fail',
+                Error: 'You are not allowed to perform this action'
+            })
+        )
+    }
+    next();
+};
+exports.getAllUsers = async (req, res, next) =>{
+    try{
+        const allUsers = await User.find();
+
+        if(allUsers){
+            return res.status(200).json(allUsers);
+        }
+    }catch(err){
+        console.log(err)
+    }
+};
+
