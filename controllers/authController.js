@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const {promisify} = require('util');
-const ObjectId = require('mongoose').Types.ObjectId;
 const User = require('./../models/userModel');
 
 
@@ -131,7 +130,8 @@ exports.protectRoutes = async (req, res, next) =>{
         //   });
         console.log(decoded);
         const currentUser = await User.findById(decoded.id);
-        if(!currentUser || !currentUser.active){
+
+        if(!currentUser || currentUser.active === false){
             return next(
                     res.status(401).json({
                     status: 'Fail',
@@ -170,16 +170,5 @@ exports.restrictToAdmin = (req, res, next) =>{
         )
     }
     next();
-};
-exports.getAllUsers = async (req, res, next) =>{
-    try{
-        const allUsers = await User.find();
-
-        if(allUsers){
-            return res.status(200).json(allUsers);
-        }
-    }catch(err){
-        console.log(err)
-    }
 };
 
