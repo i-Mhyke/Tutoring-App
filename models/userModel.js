@@ -5,11 +5,13 @@ const validator = require('validator');
 const userSchema = new mongoose.Schema({
     firstName:{
         type: String,
-        required: [true, 'Please provide your First name']
+        required: [true, 'Please provide your First name'],
+        uppercase: true
     },
     lastName: {
         type: String,
-        required: [true, 'Please provide your Last name']
+        required: [true, 'Please provide your Last name'],
+        uppercase: true
     },
     email:{
         type: String,
@@ -47,8 +49,12 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: true,
         select: false
-    }
-});
+    },
+    subjects:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Subject"
+    }]
+},{timestamps: true});
 userSchema.pre('save', async function(next) {
     if (!this.isModified('password')) return next();
 
