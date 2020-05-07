@@ -1,5 +1,6 @@
 const Category = require('./../models/categoryModel');
 const Subject = require('./../models/subjectModel');
+const User = require('./../models/userModel');
 
 exports.createCategory = async (req, res, next) =>{
     try{
@@ -17,6 +18,37 @@ exports.createCategory = async (req, res, next) =>{
             error: err
         })
     }
+};
+exports.updateCategory = async (req, res, next) =>{
+    await Category.findOneAndUpdate({_id: req.params.category_id}, {name: req.body.name}, {new:true},
+         function(err, category){
+        if (err) return res.status(500).json(
+            {error : "There was a problem updating the category!.",
+            err
+        });
+            
+          res.status(200).send(category);
+    });
+};
+exports.deleteCategory = async (req, res, next) =>{
+    try {
+        const category = await Category.findByIdAndDelete({_id: req.params.category_id });
+        const subject = await Subject.deleteMany({category: req.params.category_id }, function(err){
+            if(err){
+                res.status(500).json({
+                    status: 'fail',
+                    err
+                })
+            }
+            res.status(204).json({
+                status: 'Success',
+                data: null
+            })
+        });
+        console.log(category, subject);  
+      } catch(err) {
+        console.log(err)
+      }
 };
 exports.createSubject = async (req, res, next) => {
     try{
@@ -43,7 +75,6 @@ exports.getCategories = async (req, res, next) =>{
             status: 'success',
             categories
         });
-
     }catch(err){
         res.status(400).json({
             status: 'Fail',
@@ -53,7 +84,7 @@ exports.getCategories = async (req, res, next) =>{
 };
 exports.getSubjectInCategory = async (req, res, next) =>{
     try{
-        const categorySubjects = await Subject.find({category: req.params.category_id})
+        const categorySubjects = await Subject.find({category: req.params.category_id}).sort(req.query.sort)
         .populate("category","name");
             res.status(200).json({
                 status: 'Success',
@@ -65,4 +96,90 @@ exports.getSubjectInCategory = async (req, res, next) =>{
             error: err
         })
     }
-}
+};
+exports.updateSubject = async (req, res, next) =>{
+    try{
+        await Subject.findByIdAndUpdate({_id: req.params.subject_id}, {title: req.body.title}, {new: true}, function(err, subject){
+            if(err){ res.status(500).json({
+                status: 'fail',
+                error: err
+            })
+            }
+            res.status(200).json({subject});
+        })
+    }catch(err){
+        console.log(err)
+    }
+};
+exports.deleteSubject = async (req, res, next) =>{
+    try{
+        await Subject.findByIdAndDelete({_id: req.params.subject_id}, function(err, data){
+            if(err){
+                res.status(500).json({
+                    status: 'Fail',
+                    error: err
+                })
+            }
+            res.status(204).json({
+                status: 'Success',
+                data
+            })
+        });
+    }catch(err){
+        console.log(err);
+    }
+};
+exports.getSubjectById = async (req, res, next) =>{
+    try{
+        const subject = await Subject.findById({_id: req.params.subject_id})
+        .populate("category", "name description");
+        res.status(200).json({
+            status: 'Success',
+            subject
+        })
+    }catch(err){
+        res.status(500).json({
+            status: 'Fail',
+            err
+        })
+    }
+};
+exports.getSubjectsByTitle = async (req, res, next) =>{
+    try{
+        console.log(req);
+        const subjects = await Subject.find({title: req.query.subject.toUpperCase()})
+        .populate("category", "name description");
+            if(subjects.length === 0){
+             return res.status(500).json({
+                    status: 'fail',
+                    message: "No records found"
+                })
+            }
+                res.status(200).json({
+                    status: 'sucess',
+                    subjects
+                })
+            console.log(subjects);
+    }catch(err){
+        console.log(err);
+        res.status(500).json({
+            status: 'Fail',
+            err
+        })
+    }
+};
+exports.getTutorsBySubject = async (req, res, next) =>{
+    try{
+        const tutors = await User.find({subjects: req.params.subject_id}).sort(req.query.sort)
+        .populate("subjects", "title textbook");
+        res.status(200).json({
+            status: 'Success',
+            tutors
+        })
+    }catch(err){
+        res.status(200).json({
+            status: 'Fail',
+            err
+        })
+    }
+};
