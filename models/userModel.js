@@ -53,7 +53,7 @@ const userSchema = new mongoose.Schema({
     subjects:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Subject"
-    }]
+    }],
 },{timestamps: true});
 userSchema.pre('save', async function(next) {
     if (!this.isModified('password')) return next();

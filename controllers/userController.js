@@ -190,6 +190,7 @@ exports.getSubjectsregistered = async (req, res, next) =>{
 
 
 
+
 // exports.userById = (req, res, next, id) =>{
 //     User.find(ObjectId(id))
 //     .exec((err, user) =>{
