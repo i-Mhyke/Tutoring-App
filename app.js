@@ -8,7 +8,6 @@ const app = express();
 
 //database connection
 mongoose.connect(process.env.MONGODB_URI, {
-    useMongoClient: true,
     useNewUrlParser: true,
     useCreateIndex:true,
     useFindAndModify: false,
