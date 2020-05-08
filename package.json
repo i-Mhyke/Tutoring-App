@@ -1,0 +1,33 @@
+{
+  "name": "tutoring-app",
+  "version": "1.0.0",
+  "description": "Tutoring Application server",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/i-Mhyke/Tutoring-App.git"
+  },
+  "author": "Michael Madumere",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/i-Mhyke/Tutoring-App/issues"
+  },
+  "homepage": "https://github.com/i-Mhyke/Tutoring-App#readme",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-jwt": "^5.3.3",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "mongoose": "^5.9.11",
+    "morgan": "^1.10.0",
+    "validator": "^13.0.0"
+  },
+  "devDependencies": {}
+}
