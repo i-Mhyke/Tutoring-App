@@ -101,7 +101,7 @@ exports.getAllStudents = async (req, res, next) =>{
             })
     }
 };
-exports.registerTutorSubject = async (req, res, next) =>{
+exports.tutorRegisterSubject = async (req, res, next) =>{
     try{
     const tutor = await User.findByIdAndUpdate({_id: req.user.id}, {$push: {subjects: req.params.subject_id}},           {new: true, useFindAndModify: false});
             res.status(200).json({
@@ -145,6 +145,7 @@ exports.getSubjectsregistered = async (req, res, next) =>{
     }
 };
 
+<<<<<<< Updated upstream
 
 
 
@@ -205,3 +206,5 @@ exports.getSubjectsregistered = async (req, res, next) =>{
 //     next();
 // };
 
+=======
+>>>>>>> Stashed changes

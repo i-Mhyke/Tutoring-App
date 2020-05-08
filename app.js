@@ -27,8 +27,10 @@ app.use(express.urlencoded({ extended: true }));
 //routes
 const userRouter = require('./routes/userRoute');
 const subjectRouter = require('./routes/subjectRoute');
+const categoryRouter = require('./routes/categoryRoute');
+const lessonRouter = require('./routes/lessonRoute');
 
-app.use('/api/v1', userRouter, subjectRouter);
+app.use('/api/v1', userRouter, subjectRouter, categoryRouter, lessonRouter);
 
 app.get('/', (req, res) =>{
     res.render('Hello world')

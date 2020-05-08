@@ -4,17 +4,26 @@ const userController = require('./../controllers/userController');
 const lessonController = require('./../controllers/lessonController');
 const router = express.Router();
 
+//user sign-up
 router.post('/signup', authController.signUp);
+//user login
 router.post('/login', authController.login);
+//admin gets all users
 router.get('/users', authController.protectRoutes, authController.restrictToAdmin, userController.getAllUsers);
+//admin get user by id
 router.get('/users/:user_id', authController.protectRoutes, authController.restrictToAdmin, userController.getUserById);
+//admin deletes use
 router.delete('/user', authController.protectRoutes, userController.deleteUser);
-router.put('/user/toAdmin/:user_id', 
+//admin makes a tutor an admin
+router.put('/user/:user_id/admin', 
                 authController.protectRoutes, 
                 authController.restrictToAdmin, 
                 userController.assignAdminRole);
+//admin gets all tutors
 router.get('/tutors', authController.protectRoutes, authController.restrictToAdmin, userController.getAllTutors);
+//admin gets all students
 router.get('/students', authController.protectRoutes, authController.restrictToAdmin, userController.getAllStudents);
+<<<<<<< Updated upstream
 router.patch('/tutor/subjects/:subject_id', 
                 authController.protectRoutes, 
                 authController.restrictTo('tutor'), 
@@ -47,5 +56,7 @@ router.delete('/lesson/:lesson_id',
                 authController.restrictToAdmin, 
                 lessonController.deleteLesson);
 //router.param('user_id', userController.userById);
+=======
+>>>>>>> Stashed changes
 
 module.exports = router;
