@@ -47,46 +47,50 @@ exports.deleteMe = async (req, res, next) =>{
     }
     next();
 };
-exports.updateUser = async (req, res, next) =>{
-    let user = await User.findById({_id: req.params.user_id});
-        user = _.extend(user, req.body)
-        user.save(err =>{
-            if(err){
-                res.status(400).json({
-                    status: 'Fail',
-                    error : "There was a problem updating the user!.",
-                    err
-                })
-            }
-            res.status(200).json({
-                Status: 'Success',
-                user
-            })
-        });
-};
-exports.updateMe = async (req, res, next) =>{
-    let user = await User.findById({_id: req.user.id});
-        user = _.extend(user, req.body)
-        user.save(err =>{
-            if(err){
-                res.status(400).json({
-                    status: 'Fail',
-                    error : "There was a problem updating your details!.",
-                    err
-                })
-            }
-            res.status(200).json({
-                Status: 'Success',
-                user
-            })
-        });
-};
+// exports.updateUser = async (req, res, next) =>{
+//     let user = await User.findById({_id: req.params.user_id});
+//         user = _.extend(user, req.body)
+//         user.save(err =>{
+//             if(err){
+//                 res.status(400).json({
+//                     status: 'Fail',
+//                     error : "There was a problem updating the user!.",
+//                     err
+//                 })
+//             }
+//             res.status(200).json({
+//                 Status: 'Success',
+//                 user
+//             })
+//         });
+// };
+// exports.updateMe = async (req, res, next) =>{
+//     let user = await User.findById({_id: req.user.id});
+//         user = _.extend(user, req.body)
+//         user.save(err =>{
+//             if(err){
+//                 res.status(400).json({
+//                     status: 'Fail',
+//                     error : "There was a problem updating your details!.",
+//                     err
+//                 })
+//             }
+//             res.status(200).json({
+//                 Status: 'Success',
+//                 user
+//             })
+//         });
+// };
 exports.getAllUsers = async (req, res, next) =>{
     try{
         const allUsers = await User.find();
 
         if(allUsers){
-            return res.status(200).json(allUsers);
+            return res.status(200).json({
+                status: 'OK',
+                results: allUsers.length,
+                allUsers
+            });
         }
     }catch(err){
         console.log(err)
@@ -140,7 +144,7 @@ exports.getAllStudents = async (req, res, next) =>{
        console.log(req);
        const students = new Array();
        allUsers.map((user) =>{
-           if(user.role === "user"){
+           if(user.role === "students"){
              return students.push(user);
            }
        })
