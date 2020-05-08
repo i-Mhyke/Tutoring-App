@@ -4,7 +4,7 @@
   "description": "Tutoring Application server",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -14,6 +14,9 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/i-Mhyke/Tutoring-App/issues"
+  },
+  "engines": {
+    "node": "13.2.0"
   },
   "homepage": "https://github.com/i-Mhyke/Tutoring-App#readme",
   "dependencies": {
