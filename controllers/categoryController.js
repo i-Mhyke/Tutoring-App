@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
 const Category = require('./../models/categoryModel');
 const Subject = require('./../models/subjectModel');
 const User = require('./../models/userModel');
+=======
+const _= require('lodash');
+const Category = require('./../models/categoryModel');
+const Subject = require('./../models/subjectModel');
+>>>>>>> Stashed changes
 
 exports.createCategory = async (req, res, next) =>{
     try{
@@ -20,6 +26,7 @@ exports.createCategory = async (req, res, next) =>{
     }
 };
 exports.updateCategory = async (req, res, next) =>{
+<<<<<<< Updated upstream
     await Category.findOneAndUpdate({_id: req.params.category_id}, {name: req.body.name}, {new:true},
          function(err, category){
         if (err) return res.status(500).json(
@@ -29,6 +36,23 @@ exports.updateCategory = async (req, res, next) =>{
             
           res.status(200).send(category);
     });
+=======
+    let category = await Category.findById({_id: req.params.category_id});
+        category = _.extend(category, req.body)
+        category.save(err =>{
+            if(err){
+                res.status(400).json({
+                    status: 'Fail',
+                    error : "There was a problem updating the category!.",
+                    err
+                })
+            }
+            res.status(200).json({
+                Status: 'Success',
+                category
+            })
+        });
+>>>>>>> Stashed changes
 };
 exports.deleteCategory = async (req, res, next) =>{
     try {
@@ -50,6 +74,7 @@ exports.deleteCategory = async (req, res, next) =>{
         console.log(err)
       }
 };
+<<<<<<< Updated upstream
 exports.createSubject = async (req, res, next) => {
     try{
         const subject = await Subject.create({
@@ -68,6 +93,8 @@ exports.createSubject = async (req, res, next) => {
         })
     }
 };
+=======
+>>>>>>> Stashed changes
 exports.getCategories = async (req, res, next) =>{
     try{
         const categories = await Category.find();
@@ -81,6 +108,7 @@ exports.getCategories = async (req, res, next) =>{
             error: err
         })
     }
+<<<<<<< Updated upstream
 };
 exports.getSubjectInCategory = async (req, res, next) =>{
     try{
@@ -183,3 +211,6 @@ exports.getTutorsBySubject = async (req, res, next) =>{
         })
     }
 };
+=======
+};
+>>>>>>> Stashed changes
