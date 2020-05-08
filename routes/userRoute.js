@@ -9,10 +9,10 @@ router.post('/signup', authController.signUp);
 router.post('/signup/tutor', authController.tutorSignUp);
 //user login
 router.post('/login', authController.login);
-//admin gets all users
-router.get('/users', authController.protectRoutes, authController.restrictToAdmin, userController.getAllUsers);
 //admin get user by id
 router.get('/users/:user_id', authController.protectRoutes, authController.restrictToAdmin, userController.getUserById);
+//admin gets all users
+router.get('/users', authController.protectRoutes, authController.restrictToAdmin, userController.getAllUsers);
 //admin deletes user
 router.delete('/user', authController.protectRoutes, userController.deleteUser);
 //admin makes a tutor an admin

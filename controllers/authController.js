@@ -125,7 +125,8 @@ exports.login = async (req, res, next) =>{
             token,
             user: {
                Email: user.email, 
-               Name: user.firstName,
+               First_Name: user.firstName,
+               Last_Name: user.lastName,
                Id: user._id,
                Role: user.role
             }  
