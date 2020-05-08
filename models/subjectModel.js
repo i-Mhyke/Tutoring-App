@@ -11,7 +11,7 @@ const subjectSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category"
     },
-});
+},{timestamps: true});
 
 const Subject = mongoose.model('Subject', subjectSchema);
 module.exports = Subject;
