@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config({ path: './config.env'});
 const {promisify} = require('util');
 const User = require('./../models/userModel');
 
@@ -16,7 +18,7 @@ exports.signUp = async (req, res, next) => {
                 error: 'Email already exists'
             })
         }
-
+        console.log(process.env);
     const user = await User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -43,11 +45,13 @@ exports.signUp = async (req, res, next) => {
             error: error
         });
     }
-    else
-    res.status(500).json({
+    else{
+        console.log(err);
+    res.status(400).json({
         status: 'fail',
         error: err
-    });
+    })
+}
 }
 next();
 };
