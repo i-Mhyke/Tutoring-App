@@ -30,10 +30,10 @@ const subjectRouter = require('./routes/subjectRoute');
 const categoryRouter = require('./routes/categoryRoute');
 const lessonRouter = require('./routes/lessonRoute');
 
-app.use('/api/v1', userRouter, subjectRouter, categoryRouter, lessonRouter);
+app.use('/', userRouter, subjectRouter, categoryRouter, lessonRouter);
 
-app.get('/', (req, res) =>{
-    res.render('Hello world')
+app.get('/api/v1', (req, res) =>{
+    res.send('Hello world');
 });
 
 const port = 8080;

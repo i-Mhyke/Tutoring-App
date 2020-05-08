@@ -8,11 +8,11 @@ const router = express.Router();
 router.post('/signup', authController.signUp);
 //user login
 router.post('/login', authController.login);
-//admin gets all users
-router.get('/users', authController.protectRoutes, authController.restrictToAdmin, userController.getAllUsers);
 //admin get user by id
 router.get('/users/:user_id', authController.protectRoutes, authController.restrictToAdmin, userController.getUserById);
-//admin deletes use
+//admin gets all users
+router.get('/users', authController.protectRoutes, authController.restrictToAdmin, userController.getAllUsers);
+//admin deletes user
 router.delete('/user', authController.protectRoutes, userController.deleteUser);
 //admin makes a tutor an admin
 router.put('/user/:user_id/admin', 
