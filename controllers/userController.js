@@ -18,6 +18,21 @@ exports.assignAdminRole = async (req, res) => {
 };
 exports.deleteUser = async (req, res, next) =>{
     try{
+        await User.findByIdAndUpdate(req.params.user_id, {active: false});
+        res.status(204).json({
+            status: "Success",
+            data: null
+        });
+    }catch(err){
+        console.log(err)
+        res.status(400).json({
+            error: 'Error occured!'
+        })
+    }
+    next();
+};
+exports.deleteMe = async (req, res, next) =>{
+    try{
         await User.findByIdAndUpdate(req.user.id, {active: false});
         res.status(204).json({
             status: "Success",
@@ -25,8 +40,45 @@ exports.deleteUser = async (req, res, next) =>{
         });
     }catch(err){
         console.log(err)
+        res.status(400).json({
+            error: 'Error occured!'
+        })
     }
     next();
+};
+exports.updateUser = async (req, res, next) =>{
+    let user = await User.findById({_id: req.params.user_id});
+        user = _.extend(user, req.body)
+        user.save(err =>{
+            if(err){
+                res.status(400).json({
+                    status: 'Fail',
+                    error : "There was a problem updating the user!.",
+                    err
+                })
+            }
+            res.status(200).json({
+                Status: 'Success',
+                user
+            })
+        });
+};
+exports.updateMe = async (req, res, next) =>{
+    let user = await User.findById({_id: req.user.id});
+        user = _.extend(user, req.body)
+        user.save(err =>{
+            if(err){
+                res.status(400).json({
+                    status: 'Fail',
+                    error : "There was a problem updating your details!.",
+                    err
+                })
+            }
+            res.status(200).json({
+                Status: 'Success',
+                user
+            })
+        });
 };
 exports.getAllUsers = async (req, res, next) =>{
     try{
@@ -43,8 +95,9 @@ exports.getUserById = async (req, res, next) =>{
     try{
         await User.findById({_id: req.params.user_id}, function(err, user){
             if(err){
-                res.status(500).json({
+                res.status(400).json({
                     status: 'Fail',
+                    error: 'Could not get users',
                     err
                 })
             }
@@ -64,9 +117,9 @@ exports.getAllTutors = async (req, res, next) =>{
     try{
        const allUsers = await User.find().sort(req.query.sort);
        const tutors = new Array();
-       allUsers.map((tutor) =>{
-           if(tutor.role === "tutor"){
-             return tutors.push(tutor);
+       allUsers.map((user) =>{
+           if(user.role === "tutor"){
+             return tutors.push(user);
            }
        })
         res.status(200).json({
@@ -85,9 +138,9 @@ exports.getAllStudents = async (req, res, next) =>{
        const allUsers = await User.find().sort(req.query.sort);
        console.log(req);
        const students = new Array();
-       allUsers.map((student) =>{
-           if(student.role === "user"){
-             return students.push(student);
+       allUsers.map((user) =>{
+           if(user.role === "user"){
+             return students.push(user);
            }
        })
         res.status(200).json({
@@ -111,6 +164,7 @@ exports.tutorRegisterSubject = async (req, res, next) =>{
     }catch(err){
         res.status(500).json({
             Status: 'Fail',
+            error: 'Could not register for subject',
             err
         })
     }
@@ -126,6 +180,7 @@ exports.getSubjectsregistered = async (req, res, next) =>{
     }catch(err){
         res.status(500).json({
             status: 'fail',
+            error: 'Could not get subjects registered',
             err
         })
     }
@@ -140,8 +195,8 @@ exports.getSubjectsregistered = async (req, res, next) =>{
     }catch(err){
         res.status(500).json({
             status: 'Fail',
+            error: 'Could not delete subject',
             err
         })
     }
 };
-

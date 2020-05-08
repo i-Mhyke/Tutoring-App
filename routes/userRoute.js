@@ -14,14 +14,20 @@ router.get('/users/:user_id', authController.protectRoutes, authController.restr
 //admin gets all users
 router.get('/users', authController.protectRoutes, authController.restrictToAdmin, userController.getAllUsers);
 //admin deletes user
-router.delete('/user', authController.protectRoutes, userController.deleteUser);
+router.delete('/users/:user_id', authController.protectRoutes, authController.restrictToAdmin, userController.deleteUser);
+//user deletes his/herself
+router.delete('/user/me', authController.protectRoutes, userController.deleteMe);
+//admin update user
+router.put('/users/:user_id', authController.protectRoutes, authController.restrictToAdmin, userController.updateUser);
+// user updates his/herself
+router.patch('/user/me', authController.protectRoutes, authController.restrictToAdmin, userController.updateMe);
 //admin makes a tutor an admin
 router.put('/user/:user_id/admin', 
                 authController.protectRoutes, 
                 authController.restrictToAdmin, 
                 userController.assignAdminRole);
 //admin gets all tutors
-router.get('/tutors', authController.protectRoutes, authController.restrictToAdmin, userController.getAllTutors);
+router.get('/tutors', authController.protectRoutes, userController.getAllTutors);
 //admin gets all students
 router.get('/students', authController.protectRoutes, authController.restrictToAdmin, userController.getAllStudents);
 
