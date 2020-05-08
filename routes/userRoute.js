@@ -4,6 +4,9 @@ const userController = require('./../controllers/userController');
 const router = express.Router();
 
 router.post('/signup', authController.signUp);
+//tutor Sign-up
+router.post('/signup/tutor', authController.tutorSignUp);
+//user login
 router.post('/login', authController.login);
 router.get('/users', authController.protectRoutes, authController.restrictToAdmin, authController.getAllUsers);
 router.delete('/user', authController.protectRoutes, userController.deleteUser);
