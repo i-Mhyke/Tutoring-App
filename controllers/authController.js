@@ -2,8 +2,6 @@ const jwt = require('jsonwebtoken');
 const {promisify} = require('util');
 const User = require('./../models/userModel');
 
-
-
 const signToken = (id, role) => {
     return jwt.sign({id, role}, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRESIN
@@ -71,10 +69,8 @@ exports.login = async (req, res, next) =>{
             })
             next();
         }
-
         const token = signToken(user._id, user.role);
         res.cookie('jwt', token, {expires: new Date(Date.now() + 9999)});
-        // res.header('Authorization', `Bearer ${token}`);
         res.status(200).json({
             token,
             user: {
@@ -105,32 +101,9 @@ exports.protectRoutes = async (req, res, next) =>{
                     Error: 'You are not logged in. Please login to gain access'
                 })
             )
-        }; 
-        console.log(token);
-
-        const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET, function (err){
-                if (err) {
-               return next( res.status(401).json({
-                    status: 'Fail',
-                    Error: 'You are not authenticated!'
-                })
-               )}
-        });
-        // jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
-        //     if (err) {
-        //        return next( res.status(401).json({
-        //             status: 'Fail',
-        //             Error: 'You are not authenticated!'
-        //         })
-        //        )
-        //     } else {
-        //       req.decoded = decoded;
-        //       next();
-        //     }
-        //   });
-        console.log(decoded);
+        };
+        const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
         const currentUser = await User.findById(decoded.id);
-
         if(!currentUser || currentUser.active === false){
             return next(
                     res.status(401).json({
@@ -141,13 +114,16 @@ exports.protectRoutes = async (req, res, next) =>{
         }
         req.user = currentUser;
     }catch(err){
-        console.log(err)
+        res.status(401).json({
+            status: 'Fail',
+            Error: 'You are not authenticated'
+        });
+        console.log(err);
     }
     next();
 };
 exports.restrictTo = (...roles) =>{
     return (req, res, next) =>{
-       // console.log(req);
         if(!roles.includes(req.user.role)){
             return next(
                 res.status(403).json({
@@ -160,12 +136,11 @@ exports.restrictTo = (...roles) =>{
     }
 };
 exports.restrictToAdmin = (req, res, next) =>{
-    //console.log(req);
     if(!req.user.isAdmin){
         return next(
             res.status(403).json({
                 status: 'fail',
-                Error: 'You are not allowed to perform this action'
+                Error: 'You are not authorized to perform this action'
             })
         )
     }
