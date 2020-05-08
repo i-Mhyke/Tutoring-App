@@ -32,7 +32,9 @@ exports.deleteUser = async (req, res, next) =>{
     }
     next();
 };
-exports.deleteMe = async (req, res, next) =>{
+
+exports.getAllUsers = async (req, res, next) =>{
+
     try{
         await User.findByIdAndUpdate(req.user.id, {active: false});
         res.status(204).json({
@@ -47,6 +49,7 @@ exports.deleteMe = async (req, res, next) =>{
     }
     next();
 };
+
 // exports.updateUser = async (req, res, next) =>{
 //     let user = await User.findById({_id: req.params.user_id});
 //         user = _.extend(user, req.body)
@@ -205,3 +208,4 @@ exports.getSubjectsregistered = async (req, res, next) =>{
         })
     }
 };
+

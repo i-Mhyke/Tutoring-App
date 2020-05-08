@@ -4,7 +4,7 @@
   "description": "Tutoring Application server",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -15,6 +15,9 @@
   "bugs": {
     "url": "https://github.com/i-Mhyke/Tutoring-App/issues"
   },
+  "engines": {
+    "node": "13.2.0"
+  },
   "homepage": "https://github.com/i-Mhyke/Tutoring-App#readme",
   "dependencies": {
     "bcrypt": "^4.0.1",
@@ -24,8 +27,10 @@
     "express": "^4.17.1",
     "express-jwt": "^5.3.3",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
     "mongoose": "^5.9.11",
     "morgan": "^1.10.0",
+    "nodemon": "^2.0.3",
     "validator": "^13.0.0"
   },
   "devDependencies": {}
