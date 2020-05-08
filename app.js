@@ -33,10 +33,10 @@ const lessonRouter = require('./routes/lessonRoute');
 app.use('/api/v1', userRouter, subjectRouter, categoryRouter, lessonRouter);
 
 app.get('/', (req, res) =>{
-    res.render('Hello world')
+    res.send('Hello world');
 });
 
-const port = 8080;
+const port = process.env.PORT || 5000;
 app.listen(port, () =>{
     console.log(`App Running on port ${port}`);
 });
