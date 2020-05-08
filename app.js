@@ -8,6 +8,7 @@ const app = express();
 
 //database connection
 mongoose.connect(process.env.LOCAL_DATABASE, {
+    useMongoClient: true,
     useNewUrlParser: true,
     useCreateIndex:true,
     useFindAndModify: false,
