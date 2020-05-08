@@ -13,7 +13,7 @@ router.post('/login', authController.login);
 router.get('/users', authController.protectRoutes, authController.restrictToAdmin, userController.getAllUsers);
 //admin get user by id
 router.get('/users/:user_id', authController.protectRoutes, authController.restrictToAdmin, userController.getUserById);
-//admin deletes use
+//admin deletes user
 router.delete('/user', authController.protectRoutes, userController.deleteUser);
 //admin makes a tutor an admin
 router.put('/user/:user_id/admin', 
