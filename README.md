@@ -56,8 +56,6 @@ Create Admin  =>     PUT /user/:tutor_id/admin
 Retrieve User =>     GET /users/:user_id           (Restricted to admin users. Retrieves users(tutor or student) by Id)
 Delete User =>     DELETE /users/:user_id          (Restricted to admin users. Deactivates users(tutor or student) by Id)
 Delete me =>       DELETE /user/me                 (User deactivates their own account)
-Update User =>       PUT /users/:user_id           (Restricted to admin users. Input details that admin wants to modify)
-Update me =>         PATCH /user/me                (User updates their own account details)
 Retrieve Users =>    GET /users                    (Restricted to admin users. Retrieves all application users)
 Retrieve tutors =>   GET /tutors?sort=firstname    (All users can retrieve all tutors on the app sorted alphabetically)
 Retrieve Users =>    GET /students                 (Restricted to admin users. Retrieves all students on the app)
@@ -72,7 +70,7 @@ Required fields for creating category:
 Create Category =>      POST /category              (Restricted to admin users. Create category)
 Retrieve category =>    GET  /category              (All users can get all categories)
 Update Category =>      PUT /category/:category_id  (Restricted to admin users. Update category details)
-Delete Category =>   DELETE /category/:category_id  (Restricted to admin users. Delete a category(Also deletes subjects))
+Delete Category =>   DELETE /category/:category_id  (Restricted to admin users. Delete a category(Also deletes subjects in that category))
 
 SUBJECT MODULE: 
 Required fields for creating subject:
@@ -105,7 +103,7 @@ Required fields for creating lessons by binding it with the students email and t
             }
 When student books lesson he/she does not need to input their email address (i.e student_id).
 
-Admin Create Lesson =>                                     POST /lesson/admin
+Admin Create Lesson =>                                     POST /admin/lesson
 Student Book Lesson with Tutor =>                          POST /student/lesson
 Student Retrieve booked Lesson =>                          GET /student/lessons
 Tutor Retrieve All lessons To Take =>                      GET /tutor/lessons
