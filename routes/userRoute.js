@@ -17,11 +17,6 @@ router.get('/users', authController.protectRoutes, authController.restrictToAdmi
 router.delete('/users/:user_id', authController.protectRoutes, authController.restrictToAdmin, userController.deleteUser);
 //user deletes his/herself
 router.delete('/user/me', authController.protectRoutes, userController.deleteMe);
-//admin update user
-router.put('/users/:user_id', authController.protectRoutes, authController.restrictToAdmin, userController.updateUser);
-// user updates his/herself
-router.patch('/user/me', authController.protectRoutes, authController.restrictToAdmin, userController.updateMe);
-//admin makes a tutor an admin
 router.put('/user/:user_id/admin', 
                 authController.protectRoutes, 
                 authController.restrictToAdmin, 
