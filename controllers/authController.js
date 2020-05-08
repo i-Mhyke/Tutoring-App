@@ -47,7 +47,7 @@ exports.signUp = async (req, res, next) => {
     }
     else{
         console.log(err);
-    res.status(500).json({
+    res.status(400).json({
         status: 'fail',
         error: err
     })
