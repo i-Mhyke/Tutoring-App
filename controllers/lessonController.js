@@ -19,6 +19,7 @@ exports.adminCreateLesson = async (req, res, next) =>{
        }
        const lesson = await Lesson.create({
            subject: req.body.subject,
+           topic: req.body.topic,
            tutor_email: req.body.tutor_email,
            tutor: tutor.id,
            student_email: req.body.student_email,
@@ -37,7 +38,7 @@ exports.adminCreateLesson = async (req, res, next) =>{
         })
     }
 };
-exports.studentCreateLesson = async (req, res, next) =>{
+exports.studentBookLesson = async (req, res, next) =>{
     try{
         const tutor = await User.findOne({email: req.body.tutor_email.toLowerCase()});
        if(tutor == null){
@@ -116,8 +117,6 @@ exports.updateLesson = async (req, res, next) =>{
                 lesson
             })
         });
-
-        console.log(req);
     }catch(err){
         console.log(err);
         res.status(400).json({
