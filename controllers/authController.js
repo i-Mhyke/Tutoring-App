@@ -43,11 +43,13 @@ exports.signUp = async (req, res, next) => {
             error: error
         });
     }
-    else
+    else{
+        console.log(err);
     res.status(500).json({
         status: 'fail',
         error: err
-    });
+    })
+}
 }
 next();
 };
