@@ -52,4 +52,3 @@ router.delete('/tutor/subjects/:subject_id',
 
 
 module.exports = router;
-
