@@ -22,8 +22,54 @@ exports.signUp = async (req, res, next) => {
     const user = await User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
+        role: 'student',
         email: req.body.email,
-        role: req.body.role,
+        password: req.body.password,
+        confirmPassword: req.body.confirmPassword
+    });
+    const token = signToken(user._id, user.role)
+    res.status(201).json({
+        status: 'success',
+        token,
+        data: {
+            user
+        }
+    });
+} catch(err){
+    console.error(err);
+    if (err.name === 'ValidationError'){
+        const errors = Object.values(err.errors).map(el => el.message);
+        const error = errors[0];
+        res.status(500).json({
+            status: 'fail',
+            error: error
+        });
+    }
+    else{
+        console.log(err);
+    res.status(400).json({
+        status: 'fail',
+        error: err
+    })
+}
+}
+next();
+};
+exports.tutorSignUp = async (req, res, next) => {
+    try{
+        const userExists = await User.findOne({email: req.body.email});
+        if (userExists){
+            return res.status(403).json({
+                status: 'fail',
+                error: 'Email already exists'
+            })
+        }
+        console.log(process.env);
+    const user = await User.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        role: 'tutor',
         password: req.body.password,
         confirmPassword: req.body.confirmPassword
     });

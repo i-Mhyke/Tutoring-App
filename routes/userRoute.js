@@ -5,6 +5,8 @@ const router = express.Router();
 
 //user sign-up
 router.post('/signup', authController.signUp);
+//tutor Sign-up
+router.post('/signup/tutor', authController.tutorSignUp);
 //user login
 router.post('/login', authController.login);
 //admin gets all users
