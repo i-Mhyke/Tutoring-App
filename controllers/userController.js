@@ -18,6 +18,21 @@ exports.assignAdminRole = async (req, res) => {
 };
 exports.deleteUser = async (req, res, next) =>{
     try{
+        await User.findByIdAndUpdate(req.params.user_id, {active: false});
+        res.status(204).json({
+            status: "Success",
+            data: null
+        });
+    }catch(err){
+        console.log(err)
+        res.status(400).json({
+            error: 'Error occured!'
+        })
+    }
+    next();
+};
+exports.deleteMe = async (req, res, next) =>{
+    try{
         await User.findByIdAndUpdate(req.user.id, {active: false});
         res.status(204).json({
             status: "Success",
@@ -25,10 +40,46 @@ exports.deleteUser = async (req, res, next) =>{
         });
     }catch(err){
         console.log(err)
+        res.status(400).json({
+            error: 'Error occured!'
+        })
     }
     next();
 };
-<<<<<<< Updated upstream
+exports.updateUser = async (req, res, next) =>{
+    let user = await User.findById({_id: req.params.user_id});
+        user = _.extend(user, req.body)
+        user.save(err =>{
+            if(err){
+                res.status(400).json({
+                    status: 'Fail',
+                    error : "There was a problem updating the user!.",
+                    err
+                })
+            }
+            res.status(200).json({
+                Status: 'Success',
+                user
+            })
+        });
+};
+exports.updateMe = async (req, res, next) =>{
+    let user = await User.findById({_id: req.user.id});
+        user = _.extend(user, req.body)
+        user.save(err =>{
+            if(err){
+                res.status(400).json({
+                    status: 'Fail',
+                    error : "There was a problem updating your details!.",
+                    err
+                })
+            }
+            res.status(200).json({
+                Status: 'Success',
+                user
+            })
+        });
+};
 exports.getAllUsers = async (req, res, next) =>{
     try{
         const allUsers = await User.find();
@@ -44,8 +95,9 @@ exports.getUserById = async (req, res, next) =>{
     try{
         await User.findById({_id: req.params.user_id}, function(err, user){
             if(err){
-                res.status(500).json({
+                res.status(400).json({
                     status: 'Fail',
+                    error: 'Could not get users',
                     err
                 })
             }
@@ -65,9 +117,9 @@ exports.getAllTutors = async (req, res, next) =>{
     try{
        const allUsers = await User.find().sort(req.query.sort);
        const tutors = new Array();
-       allUsers.map((tutor) =>{
-           if(tutor.role === "tutor"){
-             return tutors.push(tutor);
+       allUsers.map((user) =>{
+           if(user.role === "tutor"){
+             return tutors.push(user);
            }
        })
         res.status(200).json({
@@ -86,9 +138,9 @@ exports.getAllStudents = async (req, res, next) =>{
        const allUsers = await User.find().sort(req.query.sort);
        console.log(req);
        const students = new Array();
-       allUsers.map((student) =>{
-           if(student.role === "user"){
-             return students.push(student);
+       allUsers.map((user) =>{
+           if(user.role === "user"){
+             return students.push(user);
            }
        })
         res.status(200).json({
@@ -112,6 +164,7 @@ exports.tutorRegisterSubject = async (req, res, next) =>{
     }catch(err){
         res.status(500).json({
             Status: 'Fail',
+            error: 'Could not register for subject',
             err
         })
     }
@@ -127,6 +180,7 @@ exports.getSubjectsregistered = async (req, res, next) =>{
     }catch(err){
         res.status(500).json({
             status: 'fail',
+            error: 'Could not get subjects registered',
             err
         })
     }
@@ -141,193 +195,8 @@ exports.getSubjectsregistered = async (req, res, next) =>{
     }catch(err){
         res.status(500).json({
             status: 'Fail',
+            error: 'Could not delete subject',
             err
         })
     }
 };
-
-<<<<<<< Updated upstream
-
-
-=======
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// exports.userById = (req, res, next, id) =>{
-//     User.find(ObjectId(id))
-//     .exec((err, user) =>{
-//         if(err || !user){
-//             return next(res.status(500).json({
-//                 error: err
-//             })
-//             )}
-//         req.user = user;
-//         next();
-//     })
-//     next();
-// };
-
-=======
-<<<<<<< Updated upstream
-=======
-exports.getAllUsers = async (req, res, next) =>{
-    try{
-        const allUsers = await User.find();
-
-        if(allUsers){
-            return res.status(200).json(allUsers);
-        }
-    }catch(err){
-        console.log(err)
-    }
-};
-exports.getUserById = async (req, res, next) =>{
-    try{
-        await User.findById({_id: req.params.user_id}, function(err, user){
-            if(err){
-                res.status(500).json({
-                    status: 'Fail',
-                    err
-                })
-            }
-            res.status(200).json({
-                status: "Success",
-                user
-            })
-        })
-    }catch(err){
-        res.status(500).json({
-            Status: 'Fail',
-            err
-        })
-    }
-};
-exports.getAllTutors = async (req, res, next) =>{
-    try{
-       const allUsers = await User.find().sort(req.query.sort);
-       const tutors = new Array();
-       allUsers.map((tutor) =>{
-           if(tutor.role === "tutor"){
-             return tutors.push(tutor);
-           }
-       })
-        res.status(200).json({
-            status: 'Success',
-            tutors
-        })
-    }catch(err){
-            res.status(500).json({
-                status: 'Fail',
-                message: 'Tutors not found'
-            })
-    }
-};
-exports.getAllStudents = async (req, res, next) =>{
-    try{
-       const allUsers = await User.find().sort(req.query.sort);
-       console.log(req);
-       const students = new Array();
-       allUsers.map((student) =>{
-           if(student.role === "user"){
-             return students.push(student);
-           }
-       })
-        res.status(200).json({
-            status: 'Success',
-            students
-        })
-    }catch(err){
-            res.status(500).json({
-                status: 'Fail',
-                message: 'Students not found'
-            })
-    }
-};
-exports.tutorRegisterSubject = async (req, res, next) =>{
-    try{
-    const tutor = await User.findByIdAndUpdate({_id: req.user.id}, {$push: {subjects: req.params.subject_id}},           {new: true, useFindAndModify: false});
-            res.status(200).json({
-                Status: 'Success',
-                tutor
-            })
-    }catch(err){
-        res.status(500).json({
-            Status: 'Fail',
-            err
-        })
-    }
-};
-exports.getSubjectsregistered = async (req, res, next) =>{
-    try{
-        const mySubjects = await Subject.find({_id: req.user.subjects})
-        .populate("category", "name description");
-        res.status(200).json({
-            Status: 'Success',
-            mySubjects
-        })
-    }catch(err){
-        res.status(500).json({
-            status: 'fail',
-            err
-        })
-    }
-};
- exports.deleteRegisteredSubject = async (req, res, next) =>{
-    try{
-        const subject = await User.findByIdAndUpdate({_id: req.user.id}, {$pull: {subjects: req.params.subject_id}}, {new: true});
-            res.status(200).json({
-                status: 'Success',
-                subject
-            })
-    }catch(err){
-        res.status(500).json({
-            status: 'Fail',
-            err
-        })
-    }
-};
->>>>>>> Stashed changes
->>>>>>> Stashed changes
