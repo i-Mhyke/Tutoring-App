@@ -18,7 +18,7 @@ exports.signUp = async (req, res, next) => {
                 error: 'Email already exists'
             })
         }
-
+        console.log(process.env);
     const user = await User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
