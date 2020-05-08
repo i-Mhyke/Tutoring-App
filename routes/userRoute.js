@@ -14,6 +14,7 @@ router.get('/users', authController.protectRoutes, authController.restrictToAdmi
 router.get('/users/:user_id', authController.protectRoutes, authController.restrictToAdmin, userController.getUserById);
 //admin deletes use
 router.delete('/user', authController.protectRoutes, userController.deleteUser);
+<<<<<<< Updated upstream
 //admin makes a tutor an admin
 router.put('/user/:user_id/admin', 
                 authController.protectRoutes, 
@@ -57,6 +58,23 @@ router.delete('/lesson/:lesson_id',
                 lessonController.deleteLesson);
 //router.param('user_id', userController.userById);
 =======
+=======
+<<<<<<< Updated upstream
+router.put('/user/toAdmin/:user_id', authController.protectRoutes, authController.restrictToAdmin, userController.assignAdminRole);
+
+//router.param('user_id', userController.userById);
+=======
+//admin makes a tutor an admin
+router.put('/user/:user_id/admin', 
+                authController.protectRoutes, 
+                authController.restrictToAdmin, 
+                userController.assignAdminRole);
+//admin gets all tutors
+router.get('/tutors', authController.protectRoutes, authController.restrictToAdmin, userController.getAllTutors);
+//admin gets all students
+router.get('/students', authController.protectRoutes, authController.restrictToAdmin, userController.getAllStudents);
+
+>>>>>>> Stashed changes
 >>>>>>> Stashed changes
 
 module.exports = router;
