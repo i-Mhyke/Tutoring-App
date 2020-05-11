@@ -9,12 +9,12 @@ The Elitetutors API is organized around REST built with express. The API has pre
 ## HTTP STATUS CODE SUMMARY
 ```
 200 - OK	            Everything worked as expected.
-201 - OK                Document created successfully.
-204 - OK                Document deleted successfully.
+201 - OK                    Document created successfully.
+204 - OK                    Document deleted successfully.
 400 - Bad Request	    The request was unacceptable, often due to missing a required parameter.
 401 - Unauthorized	    No valid API key provided.
-403 - Forbidden	        The API key doesn't have permissions to perform the request.
-404 - Not Found	        The requested resource doesn't exist.
+403 - Forbidden	            The API key doesn't have permissions to perform the request.
+404 - Not Found	            The requested resource doesn't exist.
 500- Server Errors	    Something went wrong with the server.
 ```
 
@@ -55,6 +55,8 @@ Fields required for user to login;
 `
 NB: To authenticate user after login, copy the token received after login and paste it in the authorization header after indicating Bearer as seen in the image below. 
 `
+
+
 ![alt text](https://res.cloudinary.com/ihunaya/image/upload/v1588939883/Startng/Node%20js/Screenshot_15_uame8y.png)
 
 ## USERS MODULE:
@@ -104,7 +106,7 @@ Admin Delete Subject By Id =>                       DELETE /subject/:subject_id
 All Users Get tutors for a Subject =>               GET /subject/:subject_id/tutors    
 Tutors Register to take Subject by Id =>            PATCH /tutor/subjects/:subject_id 
 
-`(Logged-in tutor just needs to put the Id of the subject he/she intends to register for in the request parameter(:subject_id) and send the request to the server, The subject Id will be embeded into tutor array of subjects)`
+(Logged-in tutor just needs to put the Id of the subject he/she intends to register for in the request parameter(:subject_id) and send the request to the server, The subject Id will be embeded into tutor array of subjects)
 
 Tutor Retrieves all His Registered Subjects =>      GET /tutor/subjects
 Tutor Removes Subject registered to take =>         DELETE /tutor/subjects/:subject_id
