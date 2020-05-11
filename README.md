@@ -4,7 +4,7 @@
  ## Elite tutors.
  ##### Base Url:  https://elitetutors.herokuapp.com/api/v1/
 
-The Elitetutors API is organized around REST built with express. The API has predictable resource-oriented URLs, accepts JSON-encoded raw bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
+The Elitetutors API is organized around REST built with express. The API has predictable resource-oriented URLs, accepts JSON-encoded raw bodies as well x-www-form-urlencoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
 
 ## HTTP STATUS CODE SUMMARY
 ```
@@ -21,7 +21,7 @@ The Elitetutors API is organized around REST built with express. The API has pre
 ## USER SIGN-UP AND AUTHENTICATION:
 ### SIGN UP: 
 The fields required for a user to sign up;
-```
+```bash
     {
     "firstName": "input first name",
     "lastName": "input last name",
