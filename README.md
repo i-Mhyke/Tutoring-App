@@ -2,20 +2,20 @@
  ## Startng Nodejs task
 
  ## Elite tutors.
- Base Url:  https://elitetutors.herokuapp.com/api/v1/
-```
+ ##### Base Url:  https://elitetutors.herokuapp.com/api/v1/
+
 The Elitetutors API is organized around REST built with express. The API has predictable resource-oriented URLs, accepts JSON-encoded raw bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
-```
+
 ## HTTP STATUS CODE SUMMARY
-```python
-200 - OK	Everything worked as expected.
-201 - OK    Document created successfully.
-204 - OK    Document deleted successfully.
-400 - Bad Request	The request was unacceptable, often due to missing a required parameter.
-401 - Unauthorized	No valid API key provided.
-403 - Forbidden	The API key doesn't have permissions to perform the request.
-404 - Not Found	The requested resource doesn't exist.
-500- Server Errors	Something went wrong with the server.
+```
+200 - OK	            Everything worked as expected.
+201 - OK                Document created successfully.
+204 - OK                Document deleted successfully.
+400 - Bad Request	    The request was unacceptable, often due to missing a required parameter.
+401 - Unauthorized	    No valid API key provided.
+403 - Forbidden	        The API key doesn't have permissions to perform the request.
+404 - Not Found	        The requested resource doesn't exist.
+500- Server Errors	    Something went wrong with the server.
 ```
 
 ## USER SIGN-UP AND AUTHENTICATION:
@@ -52,9 +52,9 @@ Fields required for user to login;
 ```
 ### Login End-Points:
     POST /login            (User login to account)
-```
+`
 NB: To authenticate user after login, copy the token received after login and paste it in the authorization header after indicating Bearer as seen in the image below. 
-```
+`
 ![alt text](https://res.cloudinary.com/ihunaya/image/upload/v1588939883/Startng/Node%20js/Screenshot_15_uame8y.png)
 
 ## USERS MODULE:
