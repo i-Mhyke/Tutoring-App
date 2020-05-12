@@ -1,10 +1,10 @@
 # Tutoring App
- ## Startng Nodejs task
+ ## Startng Nodejs task 5
 
- ## Elite tutors.
  ##### Base Url:  https://elitetutors.herokuapp.com/api/v1/
 
-The Elitetutors API is organized around REST built with express. The API has predictable resource-oriented URLs, accepts JSON-encoded raw bodies as well x-www-form-urlencoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
+The Elitetutors API is organized around REST built with express. The API accepts JSON-encoded raw bodies as well x-www-form-urlencoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs. 
+
 
 ## HTTP STATUS CODE SUMMARY
 ```
@@ -15,11 +15,19 @@ The Elitetutors API is organized around REST built with express. The API has pre
 401 - Unauthorized	    No valid API key provided.
 403 - Forbidden	            The API key doesn't have permissions to perform the request.
 404 - Not Found	            The requested resource doesn't exist.
-500- Server Errors	    Something went wrong with the server.
+500 - Server Errors	    Something went wrong with the server.
 ```
 
 ## USER SIGN-UP AND AUTHENTICATION:
-### SIGN UP: 
+### Admin Login details
+Test routes assigned to only admin users
+```bash
+    {
+    "email": "admin@mail.com",
+    "password": "admin12345"
+    }
+```
+### USER SIGN UP: 
 The fields required for a user to sign up;
 ```bash
     {
@@ -30,31 +38,22 @@ The fields required for a user to sign up;
     "confirmPassword": "input password"(must be the same as password)
     }
 ```
-
-#### Sign-up End-Points: 
-    POST /signup            (default student sign up)
-    POST /signup/tutor      (tutors sign up page)
+#### Sign-up End-Points 
+    POST    /signup            (default student sign up)
+    POST    /signup/tutor      (tutors sign up page)
 
 ## LOGIN:
 Fields required for user to login;
 ```bash
     {
-     "email": "user's email"
+    "email": "user's email"
     "password": "user password"
     }   
 ```
-#### Admin Login details:
-```bash
-    {
-    "email": "admin@mail.com",
-    "password": "admin12345"
-    }
-```
 ### Login End-Points:
-    POST /login            (User login to account)
-`
-NB: To authenticate user after login, copy the token received after login and paste it in the authorization header after indicating Bearer as seen in the image below. 
-`
+    POST    /login            (User login to account)
+    
+`NB: To authenticate user after login, copy the token received after login and paste it in the authorization header after indicating Bearer as seen in the image below.`
 
 
 ![alt text](https://res.cloudinary.com/ihunaya/image/upload/v1588939883/Startng/Node%20js/Screenshot_15_uame8y.png)
