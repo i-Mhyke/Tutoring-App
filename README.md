@@ -1,27 +1,35 @@
 # Tutoring App
- ## Startng Nodejs task
+ ## Startng Nodejs task 5
 
- ## Elite tutors.
- Base Url:  https://elitetutors.herokuapp.com/api/v1/
-```python
-The Elitetutors API is organized around REST built with express. The API has predictable resource-oriented URLs, accepts JSON-encoded raw bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
-```
+ ##### Base Url:  https://elitetutors.herokuapp.com/api/v1/
+
+The Elitetutors API is organized around REST built with express. The API accepts JSON-encoded raw bodies as well x-www-form-urlencoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs. 
+
+
 ## HTTP STATUS CODE SUMMARY
-```python
-200 - OK	Everything worked as expected.
-201 - OK    Document created successfully.
-204 - OK    Document deleted successfully.
-400 - Bad Request	The request was unacceptable, often due to missing a required parameter.
-401 - Unauthorized	No valid API key provided.
-403 - Forbidden	The API key doesn't have permissions to perform the request.
-404 - Not Found	The requested resource doesn't exist.
-500- Server Errors	Something went wrong with the server.
+```
+200 - OK	            Everything worked as expected.
+201 - OK                    Document created successfully.
+204 - OK                    Document deleted successfully.
+400 - Bad Request	    The request was unacceptable, often due to missing a required parameter.
+401 - Unauthorized	    No valid API key provided.
+403 - Forbidden	            The API key doesn't have permissions to perform the request.
+404 - Not Found	            The requested resource doesn't exist.
+500 - Server Errors	    Something went wrong with the server.
 ```
 
 ## USER SIGN-UP AND AUTHENTICATION:
-### SIGN UP: 
-The fields required for a user to sign up;
+### Admin Login details
+Test routes assigned to only admin users
+```bash
+    {
+    "email": "admin@mail.com",
+    "password": "admin12345"
+    }
 ```
+### USER SIGN UP: 
+The fields required for a user to sign up;
+```bash
     {
     "firstName": "input first name",
     "lastName": "input last name",
@@ -30,31 +38,24 @@ The fields required for a user to sign up;
     "confirmPassword": "input password"(must be the same as password)
     }
 ```
-
-#### Sign-up End-Points: 
-    POST /signup            (default student sign up)
-    POST /signup/tutor      (tutors sign up page)
+#### Sign-up End-Points 
+    POST    /signup            (default student sign up)
+    POST    /signup/tutor      (tutors sign up page)
 
 ## LOGIN:
 Fields required for user to login;
 ```bash
     {
-     "email": "user's email"
+    "email": "user's email"
     "password": "user password"
     }   
 ```
-#### Admin Login details:
-```bash
-    {
-    "email": "admin@mail.com",
-    "password": "admin12345"
-    }
-```
 ### Login End-Points:
-    POST /login            (User login to account)
-```
-NB: To authenticate user after login, copy the token received after login and paste it in the authorization header after indicating Bearer as seen in the image below. 
-```
+    POST    /login            (User login to account)
+    
+`NB: To authenticate user after login, copy the token received after login and paste it in the authorization header after indicating Bearer as seen in the image below.`
+
+
 ![alt text](https://res.cloudinary.com/ihunaya/image/upload/v1588939883/Startng/Node%20js/Screenshot_15_uame8y.png)
 
 ## USERS MODULE:
@@ -104,7 +105,7 @@ Admin Delete Subject By Id =>                       DELETE /subject/:subject_id
 All Users Get tutors for a Subject =>               GET /subject/:subject_id/tutors    
 Tutors Register to take Subject by Id =>            PATCH /tutor/subjects/:subject_id 
 
-`(Logged-in tutor just needs to put the Id of the subject he/she intends to register for in the request parameter(:subject_id) and send the request to the server, The subject Id will be embeded into tutor array of subjects)`
+(Logged-in tutor just needs to put the Id of the subject he/she intends to register for in the request parameter(:subject_id) and send the request to the server, The subject Id will be embeded into tutor array of subjects)
 
 Tutor Retrieves all His Registered Subjects =>      GET /tutor/subjects
 Tutor Removes Subject registered to take =>         DELETE /tutor/subjects/:subject_id
