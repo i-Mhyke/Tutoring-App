@@ -181,7 +181,7 @@ exports.getAllStudents = async (req, res, next) =>{
        console.log(req);
        const students = new Array();
        allUsers.map((user) =>{
-           if(user.role === "students"){
+           if(user.role === "student"){
              return students.push(user);
            }
        })
