@@ -20,7 +20,8 @@ The Elitetutors API is organized around REST built with express. The API accepts
 
 # USER SIGN-UP AND AUTHENTICATION:
 ### Admin Login details
-Test routes assigned to only admin users
+#### Test routes assigned to only admin users
+`Route:     POST /login`
 ```bash
     {
     "email": "admin@mail.com",
