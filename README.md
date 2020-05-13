@@ -53,7 +53,7 @@ Fields required for user to login;
 ### Login End-Points:
     POST    /login            (User login to account)
     
-`NB: To authenticate user after login, copy the token received after login and paste it in the authorization header after indicating Bearer as seen in the image below.`
+### NB: All routes after login requires token authentication, to proceed after login, copy the token received after login and paste it in the authorization header after indicating Bearer as seen in the image below.
 
 
 ![alt text](https://res.cloudinary.com/ihunaya/image/upload/v1588939883/Startng/Node%20js/Screenshot_15_uame8y.png)
