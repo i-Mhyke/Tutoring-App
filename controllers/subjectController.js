@@ -81,6 +81,7 @@ exports.deleteSubject = async (req, res, next) =>{
             }
             res.status(204).json({
                 status: 'Success',
+                Message: 'Subject deleted successfully',
                 data
             })
         });
