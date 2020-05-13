@@ -1,7 +1,7 @@
 # Tutoring App
  ## Startng Nodejs task 5
 
- #### Base Url:  https://elitetutors.herokuapp.com/api/v1/
+ #### Base Url:  https://elitetutors.herokuapp.com/api/v1
 
 The Elitetutors API is organized around REST built with express. The API accepts JSON-encoded raw bodies as well x-www-form-urlencoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs. 
 
