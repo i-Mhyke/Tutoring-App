@@ -47,12 +47,25 @@ The fields required for a user to sign up;
 Fields required for user to login;
 ```bash
     {
-    "email": "user's email"
+    "email": "user's email",
     "password": "user password"
     }   
 ```
 ### Login End-Points:
     POST    /login            (User login to account)
+#### Example response (Unique token is generated for each logged in user)
+```bash
+    {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYjU0MmRhNjgzNGNmMDAyNGZkYmE3OCIsInJvbGUiOiJ0dXRvciIsImlhdCI6MTU4OTQxMDIwMywiZXhwIjoxNTkyODY2MjAzfQ.NHqrDzGOe_Z8F9LBkSBCrPqHCrTZdLYZx32fFqOj1yI",
+        "user": {
+            "Email": "admin@mail.com",
+            "First_Name": "MICHAEL",
+            "Last_Name": "MADUMERE",
+            "Id": "5eb542da6834cf0024fdba78",
+            "Role": "tutor"
+        }
+    }
+```
     
 ### NB: All routes after login requires token authentication, to proceed after login, copy the token received after login and paste it in the authorization header after indicating Bearer as seen in the image below.
 
@@ -64,6 +77,21 @@ Fields required for user to login;
 ## Create Admin User (ONLY ADMIN) 
 #### Parameters required: Input the tutor's Id into the url and send request to the server
 `Route:     PATCH /user/:tutor_id/admin` 
+#### Example response (isAdmin becomes true)
+```bash
+            {
+                "role": "tutor",
+                "isAdmin": true,
+                "subjects": [],
+                "_id": "5ebc77f6bf98160024c0e8a0",
+                "firstName": "DAVID",
+                "lastName": "TUTORIAL",
+                "email": "exampletutor@email.com",
+                "createdAt": "2020-05-13T22:43:02.194Z",
+                "updatedAt": "2020-05-13T22:50:28.167Z",
+                "__v": 0
+            }
+```
 
 ## Retrieve Users and Update Users (ONLY ADMIN)
 Parameters required: Input the user's Id into the url and send request to the server to retrieve the specific user
