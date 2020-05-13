@@ -1,7 +1,7 @@
 # Tutoring App
  ## Startng Nodejs task 5
 
- ##### Base Url:  https://elitetutors.herokuapp.com/api/v1/
+ #### Base Url:  https://elitetutors.herokuapp.com/api/v1/
 
 The Elitetutors API is organized around REST built with express. The API accepts JSON-encoded raw bodies as well x-www-form-urlencoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs. 
 
@@ -18,7 +18,7 @@ The Elitetutors API is organized around REST built with express. The API accepts
 500 - Server Errors	    Something went wrong with the server.
 ```
 
-## USER SIGN-UP AND AUTHENTICATION:
+# USER SIGN-UP AND AUTHENTICATION:
 ### Admin Login details
 Test routes assigned to only admin users
 ```bash
@@ -27,9 +27,7 @@ Test routes assigned to only admin users
     "password": "admin12345"
     }
 ```
-
-## USER SIGN-UP AND AUTHENTICATION:
-SIGN UP: 
+## SIGN UP: 
 The fields required for a user to sign up;
 ```bash
     {
@@ -61,28 +59,35 @@ Fields required for user to login;
 ![alt text](https://res.cloudinary.com/ihunaya/image/upload/v1588939883/Startng/Node%20js/Screenshot_15_uame8y.png)
 
 
-## USERS ROUTES:
-#### Create Admin User (ONLY ADMIN) 
-Parameters required: Input the tutor's Id into the url and send request to the server
+# USERS ROUTES:
+## Create Admin User (ONLY ADMIN) 
+#### Parameters required: Input the tutor's Id into the url and send request to the server
 `Route:     PATCH /user/:tutor_id/admin` 
 
-#### Retrieve Users and Update Users (ONLY ADMIN)
+## Retrieve Users and Update Users (ONLY ADMIN)
 Parameters required: Input the user's Id into the url and send request to the server to retrieve the specific user
-`Route:     GET     /users/:user_id        [Retrieves the specific user]`         
-`Route:     GET     /users                 [Retrrieves all users]`
-`Route:     DELETE  /users/:user_id        [Delete the user with the inputed Id]` 
-`Route:     PUT     /users/:user_id        [Update the user details]`
-`Route:     GET     /students              [Retrieves all students only]` 
+#### Retrieve a specific user with the id
+`Route:     GET     /users/:user_id`  
+#### Retrrieve all users
+`Route:     GET     /users`
+#### Delete the user with the inputed Id
+`Route:     DELETE  /users/:user_id` 
+#### Update the user details
+`Route:     PUT     /users/:user_id`
+#### Retrieve all students only
+`Route:     GET     /students` 
 
-#### Users Update and Delete Their accounts  (ALL USERS)
-Parameters Required: User must be loggedIn (i.e Token must be in autorization header)
-`Route:     DELETE  /user/me                [User deactivates their account]`
-`Route:     PATCH   /user/me                [User Updates their account details]`
+## Users Update and Delete Their accounts  (ALL USERS)
+`Parameters Required: User must be loggedIn (i.e Token must be in autorization header)`
+#### User deactivates/ deletes their account
+`Route:     DELETE  /user/me`
+#### User Updates their account details
+`Route:     PATCH   /user/me`
 
-Sort for all the tutors Alphabetically(Open to all Users)
+## Sort for all the tutors Alphabetically(Open to all Users)
 `Route:     GET     /tutors?sort=firstname`
 
-## CATEGORY ROUTES
+# CATEGORY ROUTES
 Required fields for creating category:
 ```bash
            {
@@ -103,7 +108,7 @@ Required fields for creating category:
 `Route:     DELETE  /categories/:category_id`
 
 
-## SUBJECT ROUTES: 
+# SUBJECT ROUTES: 
 Required fields for creating subject:
 ```bash
         {
@@ -112,51 +117,51 @@ Required fields for creating subject:
         }
 ```
 
-#### CREATE SUBJECT UNDER CATEGORY  (ONLY ADMIN)
-Required Parameters: ID of category that the subject will be created under
+## CREATE SUBJECT UNDER CATEGORY  (ONLY ADMIN)
+#### Required Parameters: ID of category that the subject will be created under
 `Route:     POST /category/subject/:category_id`
 
-#### UPDATE AND DELETE SUBJECT  (ONLY ADMIN)
-##### Update Subject details
-Required Parameters: Subject Id to be updated
+## UPDATE AND DELETE SUBJECT  (ONLY ADMIN)
+### Update Subject details
+#### Required Parameters: Subject Id to be updated
 `Route:     PUT     /subject/:subject_id`
-##### Delete Subject
-Required Parameters: Subject Id to be deleted
+### Delete Subject
+#### Required Parameters: Subject Id to be deleted
 `Route:     DELETE  /subject/:subject_id`
 
-#### RETRIEVE SUBJECTS (ALL USERS)
-##### By Category
-Required Parameters: ID of category
+## RETRIEVE SUBJECTS (ALL USERS)
+### By Category
+#### Required Parameters: ID of category
 `Route:     GET /category/:category_id/subjects`
 
-##### By Subject Id
-Required Parameters: ID of subject
+### By Subject Id
+#### Required Parameters: ID of subject
 `Route:     GET /subjects/:subject_id`
 
-##### All subjects
+### All subjects
 `Route:     GET /subjects`
 
-##### Seacrch for subject by name
-Required Parameters: Input the name of the subject in the subject field
+### Seacrch for subject by name
+#### Required Parameters: Input the name of the subject in the subject field
 `Route:     GET /subject?subject={subject name}`
 
-##### Get all tutors taking a particular subject
-Required Parameters: Subject Id 
+### Get all tutors taking a particular subject
+#### Required Parameters: Subject Id 
 `Route:     GET /subject/:subject_id/tutors`
 
-####  TUTOR'S ROUTE FOR SUBJECTS    (ONLY TUTORS)
-##### Register to take Subject
-Required Parameters: Input Id of the subject that tutor wants to register for and send the request to the server. This automatically registers the subject under the array of subjects for the tutor.
+##  TUTOR'S ROUTE FOR SUBJECTS    (ONLY TUTORS)
+### Register to take Subject
+##### Required Parameters: Input Id of the subject that tutor wants to register for and send the request to the server. This automatically registers the subject under the array of subjects for the tutor.
 `Route:    PATCH   /tutor/subjects/:subject_id`
 
-##### Get all registered subject
+### Tutor Get all registered subject
 `Route:    GET     /tutor/subjects` 
 
-##### Delete subject registered for
+### Tutor Delete subjects registered for
 `Route:   DELETE   /tutor/subjects/:subject_id`
 
 
-## LESSON ROUTES: 
+# LESSON ROUTES: 
 Required fields for creating lessons by binding it with the students email and tutors email which are unique fields in the model.
 ```bash
             {
@@ -166,14 +171,14 @@ Required fields for creating lessons by binding it with the students email and t
                 "student_email": "Input the student that booked the lesson"
             }
 ```
-`When student books lesson he/she does not need to input their email address (i.e student_id).`
 
-#### CREATE LESSON  (ONLY ADMIN)
-Admin creates Lesson based on the parameters above using the route below
+## CREATE LESSON  (ONLY ADMIN)
+#### Admin creates Lesson based on the parameters above using the route below
 `Route:        POST /admin/lesson`
 
-#### CREATE LESSON  (ONLY STUDENT)
-Students can book for lesson with the following parameters:
+## CREATE LESSON  (ONLY STUDENTS)
+`Route:     POST   /student/lesson`
+##### Students can book for lesson with the following parameters:
 ```bash
             {
                 "subject": "Input subject the student is interested in",
@@ -181,23 +186,22 @@ Students can book for lesson with the following parameters:
                 "tutor_email": "Input the tutor booked for the lesson"
             }
 ```
-`Route:     POST   /student/lesson`
 
-#### RETRIEVE LESSONS
-##### GET ALL LESSONS   (ONLY ADMIN)
-Admin retrieves all lessons booked in the application
+## RETRIEVE LESSONS
+### GET ALL LESSONS   (ONLY ADMIN)
+#### Admin retrieves all lessons booked in the application
 `Route:     GET   /lessons`
 
-##### GET ALL LESSONS BOOKED    (ONLY STUDENTS)
-students retrieve lessons they booked and lessons booked for them by the admin
+### GET ALL LESSONS BOOKED    (ONLY STUDENTS)
+#### students retrieve lessons they booked and lessons booked for them by the admin
 `Route:     GET /student/lessons`
 
-##### GET ALL LESSONS BOOKED    (ONLY TUTORS)
-Tutors retrieve all lessons they are expected to take part in
+### GET ALL LESSONS BOOKED    (ONLY TUTORS)
+#### Tutors retrieve all lessons they are expected to take part in
 `Route:     GET /tutor/lessons`
 
-#### UPDATE LESSON  (ONLY ADMIN)
-Admin Update lesson details (eg. Student, Tutor, Subject,)
+### UPDATE LESSON  (ONLY ADMIN)
+#### Admin Update lesson details (eg. Student, Tutor, Subject,)
 `Route:     PUT /lessons/:lesson_id`
 
 #### DELETE LESSON  (ADMIN ONLY)
