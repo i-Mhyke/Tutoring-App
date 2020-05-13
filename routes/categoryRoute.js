@@ -9,14 +9,14 @@ router.post('/category',
                     authController.restrictToAdmin, 
                     categoryController.createCategory);
 //get all categories
-router.get('/category', authController.protectRoutes, categoryController.getCategories);
+router.get('/categories', authController.protectRoutes, categoryController.getCategories);
 //update a category
-router.put('/category/:category_id', 
+router.put('/categories/:category_id', 
                     authController.protectRoutes,
                     authController.restrictToAdmin, 
                     categoryController.updateCategory);
 //delete a category
-router.delete('/category/:category_id', 
+router.delete('/categories/:category_id', 
                 authController.protectRoutes, 
                 authController.restrictToAdmin,
                 categoryController.deleteCategory);
