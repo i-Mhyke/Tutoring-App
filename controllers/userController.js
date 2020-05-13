@@ -2,19 +2,36 @@ const _ = require('lodash');
 const User = require('./../models/userModel');
 const Subject = require('./../models/subjectModel');
 
-exports.assignAdminRole = async (req, res) => {
-    let updatedUser;
-    await User.findOne({_id: req.params.user_id}, 'role', function(err, person){
-        if(err) return res.status(500).send("something went wrong");
-        updatedUser = person;
+const filteredObj = (obj, ...allowedFields) =>{
+    const newFields = {};
+    Object.keys(obj).forEach(el =>{
+        if(allowedFields.includes(el)){
+            newFields[el] = obj[el]
+        }
     });
-    if(updatedUser.role === "tutor"){
-        User.findOneAndUpdate({_id: req.params.user_id}, {isAdmin: true}, {new: true}, function (err, user) {
-          if (err) return res.status(500).send("There was a problem updating the user.");
-          res.status(200).send(user);
+    return newFields;
+};
+
+exports.assignAdminRole = async (req, res) => {
+    try{
+        let updatedUser;
+        await User.findOne({_id: req.params.user_id}, 'role', function(err, person){
+            if(err) return res.status(500).send("something went wrong");
+            updatedUser = person;
         });
-    }else{
-        res.status(400).send("Students are not allowed to be admin");
+        if(updatedUser.role === "tutor"){
+            User.findOneAndUpdate({_id: req.params.user_id}, {isAdmin: true}, {new: true}, function (err, user) {
+              if (err) return res.status(500).send("There was a problem updating the user.");
+              res.status(200).send(user);
+            });
+        }else{
+            res.status(400).send("Students are not allowed to be admin");
+        }
+    }catch(err){
+        res.status(500).json({
+            err
+        })
+        console.log(err)
     }
 };
 exports.deleteUser = async (req, res, next) =>{
@@ -22,7 +39,7 @@ exports.deleteUser = async (req, res, next) =>{
         await User.findByIdAndUpdate(req.params.user_id, {active: false});
         res.status(204).json({
             status: "Success",
-            data: null
+            message: "User deleted successfully"
         });
     }catch(err){
         console.log(err)
@@ -49,41 +66,54 @@ exports.getAllUsers = async (req, res, next) =>{
     }
     next();
 };
-
-// exports.updateUser = async (req, res, next) =>{
-//     let user = await User.findById({_id: req.params.user_id});
-//         user = _.extend(user, req.body)
-//         user.save(err =>{
-//             if(err){
-//                 res.status(400).json({
-//                     status: 'Fail',
-//                     error : "There was a problem updating the user!.",
-//                     err
-//                 })
-//             }
-//             res.status(200).json({
-//                 Status: 'Success',
-//                 user
-//             })
-//         });
-// };
-// exports.updateMe = async (req, res, next) =>{
-//     let user = await User.findById({_id: req.user.id});
-//         user = _.extend(user, req.body)
-//         user.save(err =>{
-//             if(err){
-//                 res.status(400).json({
-//                     status: 'Fail',
-//                     error : "There was a problem updating your details!.",
-//                     err
-//                 })
-//             }
-//             res.status(200).json({
-//                 Status: 'Success',
-//                 user
-//             })
-//         });
-// };
+exports.updateUser = async (req, res, next) =>{
+    try{
+        if(req.body.isAdmin){
+            res.status(400).json({
+                Status: 'fail',
+                error: 'This route is not for assigning admin role to users'
+            })
+        }
+        const updatedUser = await User.findByIdAndUpdate({_id: req.params.user_id}, req.body, {
+            new: true, 
+            runValidators:true});
+            res.status(200).json({
+                status: 'Success',
+                data: updatedUser
+            })
+    }catch(err){
+        res.status(500).json({
+            err
+        })
+        console.log(err)
+    }
+};
+exports.updateMe = async (req, res, next) =>{
+    try{
+        if(req.user.isAdmin === true){
+            const updateAdmin = await User.findByIdAndUpdate({_id: req.user.id}, req.body, {
+                new: true, 
+                runValidators: true});
+            res.status(200).json({
+                Status: 'Success',
+                user: updateAdmin
+            })
+        }
+        const filteredBody = filteredObj(req.body, 'email', 'firstName', 'lastName');
+        const updateMyAccount = await User.findByIdAndUpdate({_id: req.user.id}, filteredBody, {
+            new: true, 
+            runValidators: true});
+        res.status(200).json({
+            Status: 'Success',
+            user: updateMyAccount
+        });
+    }catch(err){
+        res.status(500).json({
+            Status: 'fail',
+            err
+        })
+    }
+};
 exports.getAllUsers = async (req, res, next) =>{
     try{
         const allUsers = await User.find();
@@ -96,6 +126,10 @@ exports.getAllUsers = async (req, res, next) =>{
             });
         }
     }catch(err){
+        res.status(400).json({
+            status: 'fail',
+            message: 'Error getting users'
+        })
         console.log(err)
     }
 };
@@ -198,6 +232,7 @@ exports.getSubjectsregistered = async (req, res, next) =>{
         const subject = await User.findByIdAndUpdate({_id: req.user.id}, {$pull: {subjects: req.params.subject_id}}, {new: true});
             res.status(200).json({
                 status: 'Success',
+                message: 'Subject removed successfully',
                 subject
             })
     }catch(err){

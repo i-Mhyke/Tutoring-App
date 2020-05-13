@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-dotenv.config({ path: './config.env'});
+dotenv.config({ path: './.env'});
 const app = express();
 
 //database connection

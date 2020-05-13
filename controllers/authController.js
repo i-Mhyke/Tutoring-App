@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-dotenv.config({ path: './config.env'});
+dotenv.config({ path: './.env'});
 const {promisify} = require('util');
 const User = require('./../models/userModel');
 

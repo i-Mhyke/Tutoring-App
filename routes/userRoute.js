@@ -15,11 +15,15 @@ router.get('/users', authController.protectRoutes, authController.restrictToAdmi
 router.delete('/users/:user_id', authController.protectRoutes, authController.restrictToAdmin, userController.deleteUser);
 //user deletes his/herself
 router.delete('/user/me', authController.protectRoutes, userController.deleteMe);
-
-router.put('/user/:user_id/admin', 
+//admin assigns role to tutor
+router.patch('/user/:user_id/admin', 
                 authController.protectRoutes, 
                 authController.restrictToAdmin, 
                 userController.assignAdminRole);
+//user updates their account
+router.patch('/user/me', authController.protectRoutes, userController.updateMe);
+// Admin updates user's profile
+router.put('/users/:user_id', authController.protectRoutes, authController.restrictToAdmin, userController.updateUser);
 //admin gets all tutors
 router.get('/tutors', authController.protectRoutes, userController.getAllTutors);
 //admin gets all students
