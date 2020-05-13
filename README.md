@@ -1,4 +1,5 @@
 # Tutoring App
+<<<<<<< Updated upstream
  ## Startng Nodejs task 5
 
  ##### Base Url:  https://elitetutors.herokuapp.com/api/v1/
@@ -30,6 +31,31 @@ Test routes assigned to only admin users
 ### USER SIGN UP: 
 The fields required for a user to sign up;
 ```bash
+=======
+ Elite tutors.
+<<<<<<< Updated upstream
+ Url:  https://elitetutors.herokuapp.com/api/v1/
+ 
+
+=======
+ Base Url:  https://elitetutors.herokuapp.com/api/v1/
+
+The Elitetutors API is organized around REST built with express. The API has predictable resource-oriented URLs, accepts JSON-encoded raw bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
+
+HTTP STATUS CODE SUMMARY
+200 - OK	Everything worked as expected.
+201 - OK    Document created successfully.
+204 - OK    Document deleted successfully.
+400 - Bad Request	The request was unacceptable, often due to missing a required parameter.
+401 - Unauthorized	No valid API key provided.
+403 - Forbidden	The API key doesn't have permissions to perform the request.
+404 - Not Found	The requested resource doesn't exist.
+500- Server Errors	Something went wrong with the server.
+
+USER SIGN-UP AND AUTHENTICATION:
+SIGN UP: 
+The fields required for a user to sign up;
+>>>>>>> Stashed changes
     {
     "firstName": "input first name",
     "lastName": "input last name",
@@ -37,6 +63,7 @@ The fields required for a user to sign up;
     "password": "input password"(must be atleast 8 characters),
     "confirmPassword": "input password"(must be the same as password)
     }
+<<<<<<< Updated upstream
 ```
 #### Sign-up End-Points 
     POST    /signup            (default student sign up)
@@ -60,6 +87,33 @@ Fields required for user to login;
 
 ## USERS MODULE:
 ```
+=======
+
+Sign-up End-Points: 
+    POST /signup            (default student sign up)
+    POST /signup/tutor      (tutors sign up page)
+
+LOGIN:
+Fields required for user to login;
+    "email": "user's email"
+    "password": "user password"
+
+Admin Login details:
+    {
+    "email": "admin@mail.com",
+    "password": "admin12345"
+    }
+
+Login End-Points:
+    POST /login            (User login to account)
+
+NB: To authenticate user after login, copy the token received after login and paste it in the authorization header after indicating Bearer as seen in the image below. 
+
+![alt text](https://res.cloudinary.com/ihunaya/image/upload/v1588939883/Startng/Node%20js/Screenshot_15_uame8y.png)
+
+<<<<<<< Updated upstream
+USERS MODULE:
+>>>>>>> Stashed changes
 Create Admin  =>     PUT /user/:tutor_id/admin     
 (Restricted to admin users. Just insert the Id of tutor that would you want to have the admin role and send to server) 
 
@@ -69,15 +123,46 @@ Delete me =>       DELETE /user/me                 (User deactivates their own a
 Retrieve Users =>    GET /users                    (Restricted to admin users. Retrieves all application users)
 Retrieve tutors =>   GET /tutors?sort=firstname    (All users can retrieve all tutors on the app sorted alphabetically)
 Retrieve Users =>    GET /students                 (Restricted to admin users. Retrieves all students on the app)
+<<<<<<< Updated upstream
 ```
 
 ## CATEGORY MODULE:
 Required fields for creating category:
 ```bash
+=======
+
+CATEGORY MODULE:
+=======
+## USERS ROUTES:
+#### Create Admin User (ONLY ADMIN)
+Parameters required: Input the tutor's Id into the url and send request to the server
+`Route:     PATCH /user/:tutor_id/admin` 
+
+#### Retrieve Users and Update Users (ONLY ADMIN)
+Parameters required: Input the user's Id into the url and send request to the server to retrieve the specific user
+`Route:     GET     /users/:user_id        [Retrieves the specific user]`         
+`Route:     GET     /users                 [Retrrieves all users]`
+`Route:     DELETE  /users/:user_id        [Delete the user with the inputed Id]` 
+`Route:     PUT     /users/:user_id        [Update the user details]`
+`Route:     GET     /students              [Retrieves all students only]` 
+
+#### Users Update and Delete Their accounts  (ALL USERS)
+Parameters Required: User must be loggedIn (i.e Token must be in autorization header)
+`Route:     DELETE  /user/me                [User deactivates their account]`
+`Route:     PATCH   /user/me                [User Updates their account details]`
+
+Sort for all the tutors Alphabetically(Open to all Users)
+`Route:     GET     /tutors?sort=firstname`
+
+## CATEGORY ROUTES
+>>>>>>> Stashed changes
+Required fields for creating category:
+>>>>>>> Stashed changes
            {
             "name": "input category name",
             "description": "input category description" 
             }
+<<<<<<< Updated upstream
 ```
 ```
 Create Category =>      POST /category              (Restricted to admin users. Create category)
@@ -89,12 +174,46 @@ Delete Category =>   DELETE /category/:category_id  (Restricted to admin users. 
 ## SUBJECT MODULE: 
 Required fields for creating subject:
 ```bash
+=======
+<<<<<<< Updated upstream
+            
+Create Category =>      POST /category              (Restricted to admin users. Create category)
+Retrieve category =>    GET  /category              (All users can get all categories)
+Update Category =>      PUT /category/:category_id  (Restricted to admin users. Update category details)
+Delete Category =>   DELETE /category/:category_id  (Restricted to admin users. Delete a category(Also deletes subjects in that category))
+
+SUBJECT MODULE: 
+=======
+```
+
+#### CREATE CATEGORY (ONLY ADMIN)
+`Route:     POST    /category`
+
+#### GET CATEGORIES  (ALL USERS)
+`Route:     GET     /categories`
+
+#### UPDATE CATEGORY    (ONLY ADMIN)
+`Route:     PUT     /categories/:category_id`
+
+#### DELETE CATEGORY    (ONLY ADMIN)
+`Route:     DELETE  /categories/:category_id`
+
+
+## SUBJECT ROUTES: 
+>>>>>>> Stashed changes
+Required fields for creating subject:
+>>>>>>> Stashed changes
             {
                 "title": "input subject title",
                 "textbook": "input textbook required for subject"
             }
+<<<<<<< Updated upstream
 ```
 ```
+=======
+<<<<<<< Updated upstream
+
+>>>>>>> Stashed changes
 Admin Create Subject Under a specific Category =>   POST /category/subject/:category_id      
 All Users Retrieve Subjects By Category=>           GET /category/:category_id/subjects  
 All Users Retrieve Subject by Id =>                 GET /subjects/:subject_id    
@@ -104,24 +223,87 @@ Admin Updates Subject details =>                    PUT /subject/:subject_id
 Admin Delete Subject By Id =>                       DELETE /subject/:subject_id              
 All Users Get tutors for a Subject =>               GET /subject/:subject_id/tutors    
 Tutors Register to take Subject by Id =>            PATCH /tutor/subjects/:subject_id 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 (Logged-in tutor just needs to put the Id of the subject he/she intends to register for in the request parameter(:subject_id) and send the request to the server, The subject Id will be embeded into tutor array of subjects)
 
 Tutor Retrieves all His Registered Subjects =>      GET /tutor/subjects
 Tutor Removes Subject registered to take =>         DELETE /tutor/subjects/:subject_id
+<<<<<<< Updated upstream
 ```
 ## LESSON MODULE: 
 Required fields for creating lessons by binding it with the students email and tutors email which are unique fields in the model.
 ```bash
+=======
+
+LESSON MODULE: 
+=======
+```
+#### CREATE SUBJECT UNDER CATEGORY  (ONLY ADMIN)
+Required Parameters: ID of category that the subject will be created under
+`Route:     POST /category/subject/:category_id`
+
+#### UPDATE AND DELETE SUBJECT  (ONLY ADMIN)
+##### Update Subject details
+Required Parameters: Subject Id to be updated
+`Route:     PUT     /subject/:subject_id`
+##### Delete Subject
+Required Parameters: Subject Id to be deleted
+`Route:     DELETE  /subject/:subject_id`
+
+#### RETRIEVE SUBJECTS (ALL USERS)
+##### By Category
+Required Parameters: ID of category
+`Route:     GET /category/:category_id/subjects`
+
+##### By Subject Id
+Required Parameters: ID of subject
+`Route:     GET /subjects/:subject_id`
+
+##### All subjects
+`Route:     GET /subjects`
+
+##### Seacrch for subject by name
+Required Parameters: Input the name of the subject in the subject field
+`Route:     GET /subject?subject={subject name}`
+
+##### Get all tutors taking a particular subject
+Required Parameters: Subject Id 
+`Route:     GET /subject/:subject_id/tutors`
+
+####  TUTOR'S ROUTE FOR SUBJECTS    (ONLY TUTORS)
+##### Register to take Subject
+Required Parameters: Input Id of the subject that tutor wants to register for and send the request to the server. This automatically registers the subject under the array of subjects for the tutor.
+`Route:    PATCH   /tutor/subjects/:subject_id`
+
+##### Get all registered subject
+`Route:    GET     /tutor/subjects` 
+
+##### Delete subject registered for
+`Route:   DELETE   /tutor/subjects/:subject_id`
+
+
+## LESSON ROUTES: 
+>>>>>>> Stashed changes
+Required fields for creating lessons by binding it with the students email and tutors email which are unique fields in the model.
+>>>>>>> Stashed changes
             {
                 "subject": "Input subject the student is interested in",
                 "topic": "Input subject topics",
                 "tutor_email": "Input the tutor booked for the lesson",
                 "student_email": "Input the student that booked the lesson"
             }
+<<<<<<< Updated upstream
 ```
 `When student books lesson he/she does not need to input their email address (i.e student_id).`
 ```
+=======
+<<<<<<< Updated upstream
+When student books lesson he/she does not need to input their email address (i.e student_id).
+
+>>>>>>> Stashed changes
 Admin Create Lesson =>                                     POST /admin/lesson
 Student Book Lesson with Tutor =>                          POST /student/lesson
 Student Retrieve booked Lesson =>                          GET /student/lessons
@@ -130,4 +312,47 @@ Admin Retrieve All lessons created on the Platform =>      GET /lessons
 Admin updates lesson by Id =>                              PUT /lessons/:lesson_id 
 (Admin can edit the tutor, student and subject by indicating the field and the change to be implemented)
 Admin deletes lesson by Id =>                              DELETE /lesson/:lesson_id
+<<<<<<< Updated upstream
 ```
+=======
+=======
+```
+#### CREATE LESSON  (ONLY ADMIN)
+Admin creates Lesson based on the parameters above using the route below
+`Route:        POST /admin/lesson`
+
+#### CREATE LESSON  (ONLY STUDENT)
+Students can book for lesson with the following parameters:
+```bash
+            {
+                "subject": "Input subject the student is interested in",
+                "topic": "Input subject topics",
+                "tutor_email": "Input the tutor booked for the lesson"
+            }
+```
+`Route:     POST   /student/lesson`
+
+#### RETRIEVE LESSONS
+##### GET ALL LESSONS   (ONLY ADMIN)
+Admin retrieves all lessons booked in the application
+`Route:     GET   /lessons`
+
+##### GET ALL LESSONS BOOKED    (ONLY STUDENTS)
+students retrieve lessons they booked and lessons booked for them by the admin
+`Route:     GET /student/lessons`
+
+##### GET ALL LESSONS BOOKED    (ONLY TUTORS)
+Tutors retrieve all lessons they are expected to take part in
+`Route:     GET /tutor/lessons`
+
+#### UPDATE LESSON  (ONLY ADMIN)
+Admin Update lesson details (eg. Student, Tutor, Subject,)
+`Route:     PUT /lessons/:lesson_id`
+
+#### DELETE LESSON  (ADMIN ONLY)
+`Route:     DELETE /lesson/:lesson_id`
+
+
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
