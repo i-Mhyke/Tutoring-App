@@ -164,6 +164,7 @@ exports.getAllTutors = async (req, res, next) =>{
        })
         res.status(200).json({
             status: 'Success',
+            result: tutors.length,
             tutors
         })
     }catch(err){
@@ -185,6 +186,7 @@ exports.getAllStudents = async (req, res, next) =>{
        })
         res.status(200).json({
             status: 'Success',
+            result: students.length,
             students
         })
     }catch(err){
@@ -215,6 +217,7 @@ exports.getSubjectsregistered = async (req, res, next) =>{
         .populate("category", "name description");
         res.status(200).json({
             Status: 'Success',
+            result: mySubjects.length,
             mySubjects
         })
     }catch(err){
