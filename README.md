@@ -134,6 +134,7 @@ Required fields for creating category:
 `Route:     PUT     /categories/:category_id`
 
 #### DELETE CATEGORY    (ONLY ADMIN)
+##### Also deletes all subjects in this category
 `Route:     DELETE  /categories/:category_id`
 
 
