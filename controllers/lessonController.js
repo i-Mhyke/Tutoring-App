@@ -143,7 +143,7 @@ exports.deleteLesson = async (req, res, next) =>{
 exports.tutorLessons = async (req, res, next) =>{
     try{
         const myLessons = await Lesson.find({tutor: req.user.id})
-        .populate("tutor", "-__v -subjects -isAdmin").populate("student", "-__v -subjects -isAdmin");
+        .populate("tutor", "-__v -subjects -isAdmin").populate("student", "-__v -subjects -isAdmin -createdAt -updatedAt");
         if(myLessons == null){
             res.status(400).json({
                 Message: "You don't have any lesson at this time "
@@ -151,6 +151,7 @@ exports.tutorLessons = async (req, res, next) =>{
         }
         res.status(200).json({
             status: 'Success',
+            result: myLessons.length,
             myLessons
         })
     }catch(err){
@@ -164,7 +165,7 @@ exports.tutorLessons = async (req, res, next) =>{
 exports.studentLessons = async (req, res, next) =>{
     try{
         const myLessons = await Lesson.find({student: req.user.id})
-        .populate("tutor", "-__v -subjects -isAdmin").populate("student", "-__v -subjects -isAdmin");
+        .populate("tutor", "-__v -subjects -isAdmin").populate("student", "-__v -subjects -isAdmin -createdAt -updatedAt");
         if(myLessons == null){
             res.status(400).json({
                 Message: "You don't have any lesson at this time "
@@ -172,6 +173,7 @@ exports.studentLessons = async (req, res, next) =>{
         }
         res.status(200).json({
             status: 'Success',
+            result: myLessons.length,
             myLessons
         })
     }catch(err){
