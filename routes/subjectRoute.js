@@ -12,9 +12,8 @@ router.post('/category/subject/:category_id',
 //get all subjects in a category
 router.get('/category/:category_id/subjects', authController.protectRoutes, subjectController.getSubjectInCategory);
 //get subjects by id
-router.get('/category/subject/:subject_id', 
+router.get('/subjects/:subject_id', 
                 authController.protectRoutes, 
-                authController.restrictToAdmin, 
                 subjectController.getSubjectById);
 //get subject from search /subject?subject=chemistry
 router.get('/subject', authController.protectRoutes, subjectController.getSubjectsByTitle);
